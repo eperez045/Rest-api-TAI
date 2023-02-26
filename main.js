@@ -20,10 +20,16 @@ const createMachineCard = (unit) => {
   const porcentajeParos = parseInt((tpar / quantityrequired) * 100);
   const porcentajePreparacion = parseInt((tprep / quantityrequired) * 100);
   const porcentajeProducidos = parseInt((tprod / quantityrequired) * 100);
+  let colorAvise = '';
+  if(quantityrequired - quantityproduced == 0){
+    colorAvise = 'green'
+  }else{
+    colorAvise = 'red'
+  }
 
   return `
     <div class="col">
-      <div class="card card-machine border-black">
+      <div class="card card-machine border-black m-3 mx-auto">
         <div class="card-body">
           <h5 class="card-header" style="border: ${sitcolor} solid 1px">${wkuname} <span class="badge" style="background-color: ${sitcolor}">${sitname}</span></h5>
           <div class="mt-2">Velocidad: <strong>${speed}</strong></div>
@@ -32,9 +38,9 @@ const createMachineCard = (unit) => {
             <li class="list-inline-item">Product: <mark>${matcode}</mark></li>
           </ul>
           <p>Product-name: <strong>${matname}</strong></p>
-          <ul class="list-inline border-black">
+          <ul class="list-inline border-black p-1">
             <li class="list-inline-item">Quantity Requiered: <strong>${quantityrequired}</strong></li>
-            <li class="list-inline-item">Quantity Produced: <strong>${quantityproduced}</strong></li>
+            <li class="list-inline-item">Quantity Produced: <strong style="color: ${colorAvise}">${quantityproduced}</strong></li>
           </ul>
           Paros: ${tpar}
           <div class="progress" role="progressbar" aria-valuenow="${porcentajeParos}" aria-valuemin="0" aria-valuemax="100">
@@ -62,13 +68,12 @@ fetch("http://intranet.taionline.net:14036/api/loadtfunction", requestOptions)
       .map((obj) => {
         const machineCardsHtml = obj.workunits.map(createMachineCard).join("");
         return `
-          <div class="card mt-4 border-black">
-            <h4 class="card-header border-success">${obj.sbaname} (${obj.sbacode})</h4>
+          <div class="card m-4 border-black card-workunit">
+            <h3 class="card-header border-success text-center">${obj.sbaname} (${obj.sbacode})</h3>
             <div class="card-body">
-              <h6 class="card-text">Tiempo de produccion: <span>${obj.sbatime} segundos</span></h6>
-              <h6 class="card-text">Lugar de produccion: <span>${obj.plnname} (${obj.plncode})</span></h6>
-              <p>Maquinas:</p>
-              <div class="row">
+              <h6 class="card-text text-center">Tiempo de produccion: <span>${obj.sbatime} segundos</span></h6>
+              <h6 class="card-text text-center text-muted">Lugar de produccion: <span>${obj.plnname} (${obj.plncode})</span></h6>
+              <div class="row ">
                 ${machineCardsHtml}
               </div>
             </div>

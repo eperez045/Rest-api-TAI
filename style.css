@@ -3,4 +3,11 @@
 }
 .card-machine{
     width: 28rem;
+    -webkit-box-shadow: 5px 5px 8px 3px rgba(0,0,0,0.47); 
+box-shadow: 5px 5px 8px 3px rgba(0,0,0,0.47);
+}
+.card-workunit{
+    background-color: rgb(248, 247, 237);
+    -webkit-box-shadow: 5px 5px 8px 3px rgba(0,0,0,0.47); 
+box-shadow: 5px 5px 8px 3px rgba(0,0,0,0.47);
 }
